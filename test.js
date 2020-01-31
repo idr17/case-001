@@ -20,37 +20,6 @@ for (let key in availableBillsWQty) {
 
 availableBills = availableBills.sort((a, b) => a - b)
 
-//Get total money in wallet
-let getWalletSum = function (wallet) {
-  let sum = 0
-  for (let bill in wallet) {
-    sum += wallet[bill] * bill
-  }
-  return sum
-}
-
-//Copy a wallet without empty values
-let copyWallet = function (wallet) {
-  let newWallet = {}
-  for (let bill in wallet) {
-    if (wallet[bill] != 0) {
-      newWallet[bill] = wallet[bill]
-    }
-  }
-  return newWallet
-}
-
-//Merge two wallets without empty values
-let mergeWallets = function (wallet1, wallet2) {
-  let mergedWallet = copyWallet(wallet1)
-  for (let bill in wallet2) {
-    if (wallet2[bill] != 0) {
-      mergedWallet[bill] = wallet2[bill]
-    }
-  }
-  return mergedWallet
-}
-
 //Get possible wallets
 //Return wallets having sum >= money
 let getPossibleWallets = function (money, startingBills) {
@@ -84,6 +53,29 @@ let getPossibleWallets = function (money, startingBills) {
     }
     wallet[maxBill] = wallet[maxBill] - 1
   }
+
+  //Copy a wallet without empty values
+  function copyWallet(wallet) {
+    let newWallet = {}
+    for (let bill in wallet) {
+      if (wallet[bill] != 0) {
+        newWallet[bill] = wallet[bill]
+      }
+    }
+    return newWallet
+  }
+
+  //Merge two wallets without empty values
+  function mergeWallets(wallet1, wallet2) {
+    let mergedWallet = copyWallet(wallet1)
+    for (let bill in wallet2) {
+      if (wallet2[bill] != 0) {
+        mergedWallet[bill] = wallet2[bill]
+      }
+    }
+    return mergedWallet
+  }
+
   return possibleWallets
 }
 
@@ -105,6 +97,15 @@ let getSmallestSufficientWallet = function (money, startingBills) {
     }
   }
   return minWallet
+}
+
+//Get total money in wallet
+let getWalletSum = function (wallet) {
+  let sum = 0
+  for (let bill in wallet) {
+    sum += wallet[bill] * bill
+  }
+  return sum
 }
 
 let countWalletLeft = function (wallet) {
